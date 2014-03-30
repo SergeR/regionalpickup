@@ -1,110 +1,117 @@
 <div id="regionalpickup-settings">
 
     <div class="field">
-        <div class="name">{$p->_w('Locations')}
-            <br><br>
-            <p class="hint">{$p->_w('Customer will be prompted to select preferred location from the list')}</p>
+        <div class="name">
+            [`Locations`]<br><br>
+            <p class="hint">[`Customer will be prompted to select preferred location from the list`]</p>
         </div>
         <div class="value">
             <table class="zebra">
                 <thead>
                     <tr>
-                        <th>{$p->_w('Location name')}</th>
+                        <th>[`Location name`]</th>
                         <th>&nbsp;</th>
-                        <th>{$p->_w('Shipping rate (surcharge)')}</th>
-                        <th>{$p->_w('Free delivery limit')}</th>
-                        <th>{$p->_w('Maximum weight (kg)')}</th>
+                        <th>[`Shipping rate (surcharge)`]</th>
+                        <th>[`Free delivery limit`]</th>
+                        <th>[`Maximum weight (kg)`]</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
+                <tbody>
+                {foreach $settings.rate as $rate}
+                    <tr class="rate">
+                        <td>
+                            <input type="text" 
+                                   value="{$rate.location}"
+                                   class="refreshable input"
+                                   name="{$namespace}[rate][{$rate@index}][location]"
+                                   placeholder="[`Location name`]"
+                                   >
+                        </td>
+                        <td>→</td>
+                        <td>
+                            <input type="text" 
+                                   value="{$rate.cost}"
+                                   name="{$namespace}[rate][{$rate@index}][cost]"
+                                   placeholder="0"
+                                   >
+                        </td>
+                        <td>
+                            <input type="text" 
+                                   value="{$rate.free}"
+                                   name="{$namespace}[rate][{$rate@index}][free]"
+                                   placeholder="0"
+                                   >
+                        </td>
+                        <td>
+                            <input type="text" 
+                                   value="{$rate.maxweight}"
+                                   name="{$namespace}[rate][{$rate@index}][maxweight]"
+                                   placeholder="0"
+                                   >
+                        </td>
+                        <td>
+                            <a class="delete-rate" href="#">
+                                <i class="icon16 delete"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {foreachelse}
+                    <tr class="rate">
+                        <td>
+                            <input type="text" 
+                                   value=""
+                                   class="refreshable input"
+                                   name="{$namespace}[rate][0][location]"
+                                   placeholder="[`Location name`]"
+                                   >
+                        </td>
+                        <td>→</td>
+                        <td>
+                            <input type="text" 
+                                   value="{$rate.cost}"
+                                   name="{$namespace}[rate][0][cost]"
+                                   placeholder="0"
+                                   >
+                        </td>
+                        <td>
+                            <input type="text"
+                                   value="{$rate.free}"
+                                   name="{$namespace}[rate][0][free]"
+                                   placeholder="0"
+                                   style="width: 5em"
+                                   >
+                        </td>
+                        <td>
+                            <input type="text" 
+                                   value="{$rate.maxweight}"
+                                   name="{$namespace}[rate][0][maxweight]"
+                                   placeholder="0"
+                                   >
+                        </td>
+                        <td>
+                            <a class="delete-rate" href="#">
+                                <i class="icon16 delete"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {/foreach}
+                </tbody>
                 <tfoot>
                     <tr class="white">
                         <td colspan="4">
                             <a class="inline-link small add-rate" href="#">
-                                <i class="icon10 add"></i> <b><i>{$p->_w('Add location')}</i></b>
+                                <i class="icon10 add"></i> <b><i>[`Add location`]</i></b>
                             </a>
                         </td>
                     </tr>
                 </tfoot>
-                <tbody>
-                    {foreach $values.rate as $rate}
-                        <tr class="rate">
-                            <td>
-                                <input type="text" value="{$rate.location|escape}"
-                                       class="refreshable input"
-                                       name="{$namespace|escape}[rate][{$rate@index}][location]"
-                                       placeholder="{$p->_w('Location name')}"
-                                       >
-                            </td>
-                            <td>→</td>
-                            <td>
-                                <input type="text" value="{$rate.cost|escape}"
-                                       name="{$namespace|escape}[rate][{$rate@index}][cost]"
-                                       placeholder="0"
-                                       >
-                            </td>
-                            <td>
-                                <input type="text" value="{$rate.free|escape}"
-                                       name="{$namespace|escape}[rate][{$rate@index}][free]"
-                                       placeholder="0"
-                                       >
-                            </td>
-                            <td>
-                                <input type="text" value="{$rate.maxweight|escape}"
-                                       name="{$namespace|escape}[rate][{$rate@index}][maxweight]"
-                                       placeholder="0"
-                                       >
-                            </td>
-                            <td>
-                                <a class="delete-rate" href="#">
-                                    <i class="icon16 delete"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {foreachelse}
-                        <tr class="rate">
-                            <td>
-                                <input type="text" value=""
-                                       class="refreshable input"
-                                       name="{$namespace|escape}[rate][0][location]"
-                                       placeholder="{$p->_w('Location name')}"
-                                       >
-                            </td>
-                            <td>→</td>
-                            <td>
-                                <input type="text" value="{$rate.cost|escape}"
-                                       name="{$namespace|escape}[rate][0][cost]"
-                                       placeholder="0"
-                                       >
-                            </td>
-                            <td>
-                                <input type="text" value="{$rate.free|escape}"
-                                       name="{$namespace|escape}[rate][0][free]"
-                                       placeholder="0"
-                                       style="width: 5em"
-                                       >
-                            </td>
-                            <td>
-                                <input type="text" value="{$rate.maxweight|escape}"
-                                       name="{$namespace|escape}[rate][0][maxweight]"
-                                       placeholder="0"
-                                       >
-                            </td>
-                            <td>
-                                <a class="delete-rate" href="#">
-                                    <i class="icon16 delete"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {/foreach}
-                </tbody>
             </table>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-
     $(function() {
         'use strict';
 
@@ -154,7 +161,7 @@
             },
             update: function(e, ui){
                 $(".value .zebra tbody tr.rate").each(function(index, value){
-                    $("input", this).each(function(i,v){
+                    $("input", this).each(function(i,v) {
                         name = $(this).attr('name');
                         $(this).attr('name', name.replace(/\[rate\]\[(\d+)\]/, '[rate][' + index +']'));
                     });
@@ -162,5 +169,4 @@
             }
         });
     });
-
 </script>
