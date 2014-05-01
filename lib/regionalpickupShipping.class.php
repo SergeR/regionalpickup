@@ -140,7 +140,7 @@ class regionalpickupShipping extends waShipping
      * в БД.
      *
      * Название ПВЗ не можеь быть пустым. Потомушта.
-     * 
+     *
      * @todo Проверять, чтоб страна и регион были указаны
      *
      * @param array $settings
@@ -162,33 +162,24 @@ class regionalpickupShipping extends waShipping
         return parent::saveSettings($settings);
     }
 
-    public function getSettings($name = null)
-    {
+    /**
+     * @param string $name
+     * @return mixed
+     *
+    public function getSettings($name = null) {
         $settings = parent::getSettings($name);
 
-        if (isset($settings['rate'])) {
-            if(!is_array($settings['rate'])) {
-                
-                waLog::log("Settings '$name'", 'regionalpickup-errors.log');
-                waLog::log("Settings " . json_encode($settings), 'regionalpickup-errors.log');
-                waLog::log("Settings[rate] not an array. It is " . gettype($settings['rate']) . " and contains '" . json_encode($settings['rate']) . "'", 'regionalpickup-errors.log');
-                
-            } else {
-                foreach ($settings['rate'] as $index => $item) {
-                    if(!is_array($item)) {
-                        waLog::log("Settings[rate][item] not an array. It is " . gettype($item) . " and contains '" . json_encode($item) . "'", 'regionalpickup-errors.log');
-                    } else {
-                        $settings['rate'][$index] = array_merge(
-                            array('code' => $index, 'free'=> '0.0', 'maxweight' => '0.0', 'cost' => '0.0'),
-                            (array)$item
-                        );
-                    }
-                }
+        if (isset($settings['rate']) && is_array($settings['rate'])) {
+            foreach ($settings['rate'] as $index => $item) {
+                $settings['rate'][$index] = array_merge(
+                        array('code' => $index, 'free' => '0.0', 'maxweight' => '0.0', 'cost' => '0.0'), (array) $item
+                );
             }
         }
 
         return $settings;
     }
+     */
 
     /**
      * Проверяет есть-ли у варианта ограничение по максимальному весу
