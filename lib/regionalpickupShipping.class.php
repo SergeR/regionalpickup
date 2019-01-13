@@ -40,6 +40,7 @@
  *   - string $rate[$code]['maxweight'] Максимальный допустимый вес заказа. Про float см. выше
  *   - string $rate[$code]['free'] Пороговое значение стоимости заказа, выше которого доставка бесплатна. Про float см.
  *     выше
+ *   - string $rate[$code]['geo'] Гео-координаты пункита выдачи
  *
  */
 class regionalpickupShipping extends waShipping
@@ -94,7 +95,12 @@ class regionalpickupShipping extends waShipping
                     'name'         => $rate['location'],
                     'currency'     => $this->currency,
                     'rate'         => $this->calcCost($rate, $cost),
-                    'est_delivery' => ''
+                    'est_delivery' => '',
+                    'type'         => 'pickup',
+                    'custom_data'  => array('pickup' => array(
+                            'id'   => $code,
+                            'name' => $rate['location']
+                        ) + $this->getGeoCoordinates((string)ifset($rate, 'geo', '')))
                 );
             }
         }
@@ -197,6 +203,32 @@ class regionalpickupShipping extends waShipping
     }
 
     /**
+     * Извлекает из строки широту и долготу в пригодном для использования виде
+     *
+     * @param string $data
+     * @return array
+     */
+    private function getGeoCoordinates($data)
+    {
+        $data = explode(',', $data, 2);
+
+        if (count($data) < 2) {
+            return array();
+        }
+
+        foreach ($data as &$datum) {
+            $datum = trim($datum);
+            if (!strlen($datum)) {
+                return array();
+            }
+            $datum = floatval($datum);
+        }
+        unset($datum);
+
+        return array('lat' => $data[0], 'lng' => $data[1]);
+    }
+
+    /**
      * Расчет стоимости доставки указанного варианта с учетом возможного
      * бесплатного порога. Если бесплатный порог не указан, пуст или равен 0
      * то возвращаем стоимость доставки. Иначе 0
@@ -241,10 +273,10 @@ class regionalpickupShipping extends waShipping
         $html .= "<div class='country'>";
         $html .= "<select name='{$name}[country]'><option value=''></option>";
         foreach ($cm->all() as $country) {
-            $html .= "<option value='{$country['iso3letter']}'".
+            $html .= "<option value='{$country['iso3letter']}'" .
                 ($params['items']['country']['value'] == $country['iso3letter']
                     ? " selected='selected'" : ""
-                ).
+                ) .
                 ">{$country['name']}</value>";
         }
         $html .= "</select><br>";
@@ -259,25 +291,25 @@ class regionalpickupShipping extends waShipping
         // region section
         $html .= '<div class="region">';
         $html .= '<i class="icon16 loading" style="display:none; margin-left: -23px;"></i>';
-        $html .= '<div class="empty"'.
-            (!empty($regions) ? 'style="display:none;"' : '').
-            '><p class="small">'.
-            $plugin->_w("Shipping will be restricted to the selected country").
+        $html .= '<div class="empty"' .
+            (!empty($regions) ? 'style="display:none;"' : '') .
+            '><p class="small">' .
+            $plugin->_w("Shipping will be restricted to the selected country") .
             "</p>";
-        $html .= "<input name='{$name}[region]' value='' type='hidden'".
-            (!empty($regions) ? 'disabled="disabled"' : '').
+        $html .= "<input name='{$name}[region]' value='' type='hidden'" .
+            (!empty($regions) ? 'disabled="disabled"' : '') .
             '></div>';
-        $html .= '<div class="not-empty" '.
-            (empty($regions) ? 'style="display:none;"' : '').">";
-        $html .= "<select name='{$name}[region]'".
-            (empty($regions) ? 'disabled="disabled"' : '').
+        $html .= '<div class="not-empty" ' .
+            (empty($regions) ? 'style="display:none;"' : '') . ">";
+        $html .= "<select name='{$name}[region]'" .
+            (empty($regions) ? 'disabled="disabled"' : '') .
             '><option value=""></option>';
 
         foreach ($regions as $region) {
-            $html .= "<option value='{$region['code']}'".
+            $html .= "<option value='{$region['code']}'" .
                 ($params['items']['region']['value'] == $region['code']
                     ? ' selected="selected"' : ""
-                ).
+                ) .
                 ">{$region['name']}</option>";
         }
         $html .= "</select><br>";
@@ -286,15 +318,15 @@ class regionalpickupShipping extends waShipping
         // city section
         if (isset($params['items']['city'])) {
             $html .= "<div class='city'>";
-            $html .= "<input name='{$name}[city]' value='".
-                (!empty($params['items']['city']['value']) ? $params['items']['city']['value'] : "")."' type='text'>
+            $html .= "<input name='{$name}[city]' value='" .
+                (!empty($params['items']['city']['value']) ? $params['items']['city']['value'] : "") . "' type='text'>
                 <br>";
             $html .= "<span class='hint'>{$params['items']['city']['description']}</span></div>";
         }
 
         $html .= "</div>";
 
-        $url = wa()->getAppUrl('webasyst').'?module=backend&action=regions';
+        $url = wa()->getAppUrl('webasyst') . '?module=backend&action=regions';
 
         // container id for interaction with js purpose
         $id = preg_replace("![\\[\\]]{1,2}!", "-", $name);
