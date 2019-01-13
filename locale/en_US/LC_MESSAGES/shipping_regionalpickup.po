@@ -93,3 +93,15 @@ msgstr ""
 #: //wa-plugins/shipping/regionalpickup/lib/regionalpickupShipping.class.php:186
 msgid "Pick-up point name cannot be empty"
 msgstr ""
+
+#: /wa-plugins/shipping/regionalpickup/templates/settings.html:19
+msgid "Geo position (lat, lon)"
+msgstr ""
+
+#: /wa-plugins/shipping/regionalpickup/templates/settings.html:19
+msgid "Use dot as decimal separator and comma as lat/lon divider"
+msgstr ""
+
+#: /wa-plugins/shipping/regionalpickup/lib/regionalpickupShipping.class.php:322
+msgid "Shipping will be restricted to the selected country"
+msgstr ""
