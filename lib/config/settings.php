@@ -20,7 +20,7 @@ return array(
         ),
         'title' => 'Pick-up point country and region',
         'description' => '',
-        'control_type' => waHtmlControl::CUSTOM . ' waShipping::settingRegionZoneControl',
+        'control_type' => waHtmlControl::CUSTOM . ' regionalpickupShipping::settingRegionZoneControl',
         'items' => array(
             'country' => array(
                 'value' => '',
