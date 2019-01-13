@@ -205,7 +205,7 @@
             update: function(e, ui){
                 $(".value .zebra tbody tr.rate").each(function(index, value){
                     $("input", this).each(function(i,v){
-                        name = $(this).attr('name');
+                        var name = $(this).attr('name');
                         $(this).attr('name', name.replace(/\[rate\]\[(\d+)\]/, '[rate][' + (parseInt(index, 10) + 1) +']'));
                     });
                 });
