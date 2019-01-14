@@ -8,11 +8,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)"
-">=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n"
+"%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 2.0.6\n"
+"Language: ru_RU\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: .\n"
 
@@ -102,3 +103,17 @@ msgstr "Код ПВЗ"
 #: //wa-plugins/shipping/regionalpickup/lib/regionalpickupShipping.class.php:186
 msgid "Pick-up point name cannot be empty"
 msgstr "Название ПВЗ не может быть пустым"
+
+#: /wa-plugins/shipping/regionalpickup/templates/settings.html:19
+msgid "Geo position (lat, lon)"
+msgstr "Гео-координаты (широта, долгота)"
+
+#: /wa-plugins/shipping/regionalpickup/templates/settings.html:19
+msgid "Use dot as decimal separator and comma as lat/lon divider"
+msgstr ""
+"Используйте точку в качестве десятичного разделителя и запятую, в качестве "
+"разделителя широты и долготы"
+
+#: /wa-plugins/shipping/regionalpickup/lib/regionalpickupShipping.class.php:322
+msgid "Shipping will be restricted to the selected country"
+msgstr "Доставка будет ограничена выбранной страной"

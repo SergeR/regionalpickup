@@ -12,10 +12,11 @@
                         <th class="min-width">&nbsp;</th>
                         <th>{$p->_w('Code')}</th>
                         <th>{$p->_w('Location name')}</th>
-                        <th>&nbsp;</th>
+                        <th class="min-width"></th>
                         <th>{$p->_w('Shipping rate (surcharge)')}</th>
                         <th>{$p->_w('Free delivery limit')}</th>
                         <th>{$p->_w('Maximum weight (kg)')}</th>
+                        <th>{$p->_w('Geo position (lat, lon)')}<br><span class="hint">{$p->_w('Use dot as decimal separator and comma as lat/lon divider')}</span></th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -44,7 +45,7 @@
                             </td>
                             <td>
                                 <input type="text" value="{$rate.location}"
-                                       class="refreshable input"
+                                       class="refreshable long input"
                                        name="{$namespace}[rate][{$rate_code}][location]"
                                        placeholder="{$p->_w('Location name')}"
                                        >
@@ -54,19 +55,28 @@
                                 <input type="text" value="{$rate.cost}"
                                        name="{$namespace}[rate][{$rate_code}][cost]"
                                        placeholder="0"
+                                       class="short numerical"
                                        >
                             </td>
                             <td>
                                 <input type="text" value="{$rate.free}"
                                        name="{$namespace}[rate][{$rate_code}][free]"
                                        placeholder="0"
+                                       class="short numerical"
                                        >
                             </td>
                             <td>
                                 <input type="text" value="{$rate.maxweight}"
                                        name="{$namespace}[rate][{$rate_code}][maxweight]"
                                        placeholder="0"
+                                       class="short numerical"
                                        >
+                            </td>
+                            <td>
+                                <input type="text" value="{$rate.geo}"
+                                       name="{$namespace}[rate][{$rate_code}][geo]"
+                                       placeholder="0"
+                                >
                             </td>
                             <td>
                                 <a class="delete-rate" href="#">
@@ -89,7 +99,7 @@
                             </td>
                             <td>
                                 <input type="text" value=""
-                                       class="refreshable input"
+                                       class="refreshable long input"
                                        name="{$namespace}[rate][0][location]"
                                        placeholder="{$p->_w('Location name')}"
                                        >
@@ -99,6 +109,7 @@
                                 <input type="text" value="{$rate.cost}"
                                        name="{$namespace}[rate][0][cost]"
                                        placeholder="0"
+                                       class="short numerical"
                                        >
                             </td>
                             <td>
@@ -106,12 +117,19 @@
                                        name="{$namespace}[rate][0][free]"
                                        placeholder="0"
                                        style="width: 5em"
+                                       class="short numerical"
                                        >
                             </td>
                             <td>
                                 <input type="text" value="{$rate.maxweight}"
                                        name="{$namespace}[rate][0][maxweight]"
                                        placeholder="0"
+                                       class="short numerical"
+                                       >
+                            </td>
+                            <td>
+                                <input type="text" value="{$rate.geo}"
+                                       name="{$namespace}[rate][0][geo]"
                                        >
                             </td>
                             <td>
@@ -205,7 +223,7 @@
             update: function(e, ui){
                 $(".value .zebra tbody tr.rate").each(function(index, value){
                     $("input", this).each(function(i,v){
-                        name = $(this).attr('name');
+                        var name = $(this).attr('name');
                         $(this).attr('name', name.replace(/\[rate\]\[(\d+)\]/, '[rate][' + (parseInt(index, 10) + 1) +']'));
                     });
                 });
